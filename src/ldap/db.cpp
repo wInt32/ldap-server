@@ -31,8 +31,11 @@ static User parse_user(std::string s) {
 }
 
 Database::Database(std::string path) : file_path{path} {
-    std::cout << "db: init using " << this->file_path << "\n";
     std::ifstream file = std::ifstream{this->file_path};
+    if (!file) {
+        std::cout << "error: could not open database file \'" << this->file_path << "\'\n";
+        std::exit(1);
+    }
 
     // TODO: don't load big files into memory, maybe use mmap or window?
     std::string line;
