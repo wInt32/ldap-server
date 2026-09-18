@@ -24,7 +24,7 @@ std::string char_to_hex(unsigned char ch) {
     return s;
 }
 
-void print_bytes(std::basic_ostream<char> &o, std::string v) {
+void print_bytes(std::basic_ostream<char> &o, const std::string& v) {
     o << "Received data: [";
     for (std::size_t i = 0; i < v.size(); i++) {
         o << char_to_hex(v[i]);
@@ -107,16 +107,11 @@ std::uint32_t bswap_if_needed(std::uint32_t a) {
 
 Stream::~Stream() {}
 
-SocketStream::SocketStream() {
-    this->fd = -1;
-}
+SocketStream::SocketStream() : fd{-1}, rbuf{0} {}
 
-SocketStream::SocketStream(int fd) {
-    this->fd = fd;
-}
+SocketStream::SocketStream(int fd) : fd{fd}, rbuf{0} {}
 
-SocketStream::SocketStream(SocketStream&& other) {
-    this->fd = other.fd;
+SocketStream::SocketStream(SocketStream&& other) : fd{other.fd}, rbuf{0} {
     other.fd = -1;
 }
 

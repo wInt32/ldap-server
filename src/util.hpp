@@ -7,7 +7,6 @@
 #include <type_traits>
 #include <vector>
 #include <ostream>
-#include <memory>
 
 template<typename T>
 class Optional {
@@ -26,22 +25,9 @@ class Optional {
     Optional(Optional&& other) : value{std::move(other.value)} {
         other.has_value = false;
     }
-    ~Optional() {}
-
-    Optional swap(Optional& other) {
-        Optional<T> a{};
-        a.has_value = this->has_value;
-        std::memcpy(a.buf, this->buf, sizeof(T));
-        this->has_value = other.has_value;
-        std::memcpy(this->buf, other.buf, sizeof(T));
-        return a;
+    ~Optional() {
+        if (this->has_value && std::is_destructible<T>()) value.~T();
     }
-    
-    std::shared_ptr<T> into_shared() {
-        if (!this->has_value) return nullptr;
-        return std::make_shared<T>(std::move(this->value));
-    }
-    std::unique_ptr<T> into_unique();
 
     bool has_value;
     union {
@@ -148,7 +134,7 @@ class SocketStream : public Stream {
 
 std::string char_to_hex(unsigned char ch);
 void print_bytes(std::basic_ostream<char> &o, const std::vector<std::uint8_t> &v);
-void print_bytes(std::basic_ostream<char> &o, std::string s);
+void print_bytes(std::basic_ostream<char> &o, const std::string& s);
 std::uint32_t bswap_if_needed(std::uint32_t a);
 
 int shutdown_aware_read(int fd, void* dst, std::size_t n);
