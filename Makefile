@@ -4,7 +4,7 @@ SOURCES=$(shell find -type f -name *.cpp)
 HEADERS=$(shell find -type f -name *.hpp)
 OBJS=$(subst ./src,./obj,$(subst .cpp,.o,$(SOURCES)))
 
-CXXFLAGS=-std=c++14 -pedantic -I src/util -fanalyzer -Wall -Wextra -Wfatal-errors -g
+CXXFLAGS=-std=c++14 -pedantic -fanalyzer -Wall -Wextra -Wfatal-errors -g
 
 #@if [ ! -d "obj/ber" ]; then mkdir -p obj/ber; fi 
 
