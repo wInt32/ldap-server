@@ -34,7 +34,9 @@ void Client::thread_entry() {
     while (this->active) {
         Result<std::unique_ptr<Request>, ParserError> maybe_req = this->receive();
         if (!maybe_req.ok) {
-            std::cout << "error: " << maybe_req.error.c_str() << '\n';
+            if (maybe_req.error.kind != ParserErrorKind::Unknown) {
+                std::cout << "error: " << maybe_req.error.c_str() << '\n';
+            }
             return;
         }
         this->on_request(*maybe_req.value.get());
