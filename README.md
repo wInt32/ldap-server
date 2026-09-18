@@ -3,9 +3,9 @@ This is repository contains my solution to a programming challenge, whose goal w
 It is my first attempt at writing something non-trivial in C++, so expect bugs, horrible coding practices and outright sorcery.
 
 ## Goal
-I am to make a simple thread-per-connection LDAPv2 server using blocking IO, listening on a user specified TCP port, able to accept
+Make a simple thread-per-connection LDAPv2 server using blocking IO, listening on a user specified TCP port, able to accept
 connections from both IPv4 and IPv6. It should be able to respond to simple queries made by `ldapsearch`. The server should stop quickly when SIGINT is sent to it.   
-I would also love to learn a bit of somewhat modern C++, along with OS related concepts like signals, threads, and network IO.
+I would also love to learn a bit of modern C++, along with OS related concepts like signals, threads, and network IO.
 
 ## Rules
 - C++14 (will maybe change that to a newer version sometime)
